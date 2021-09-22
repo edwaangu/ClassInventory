@@ -40,7 +40,8 @@ namespace ClassInventory
             }
             catch
             {
-                outputLabel.Text = "One or more inputs are invalid";
+                // Error
+                outputLabel.Text = "One or more inputs are invalid"; 
             }
         }
 

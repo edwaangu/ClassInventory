@@ -52,8 +52,19 @@ namespace ClassInventory
             //---------------------------
 
             // TODO - if object is in list remove it
+            int index = players.FindIndex(a => a.name == removeInput.Text);
+            if (index >= 0)
+            {
+                players.RemoveAt(index);
+            }
+            else
+            {
+                outputLabel.Text = "Could not delete player due to it not existing";
+                return;
+            }
 
             // TODO - display message to indicate deletion made
+            outputLabel.Text = $"Deleted {removeInput.Text} from the list!";
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -63,12 +74,22 @@ namespace ClassInventory
             //---------------------------
 
             // TODO - if object entered exists in list show it
+            int index = players.FindIndex(a => a.name == textBox1.Text);
+            if (index != -1)
+            {
+                outputLabel.Text = $"{players[index].name} - {players[index].age} - {players[index].team} - {players[index].position}\n";
+            }
+            else
+            {
+                outputLabel.Text = "Player not found!";
+            }
             // TODO - else show not found message
         }
 
         private void showButton_Click(object sender, EventArgs e)
         {
             // TODO - show all objects in list. Use a foreach loop.
+            players = players.OrderBy(x => x.team).ThenBy(a => a.name).ToList();
             outputLabel.Text = "";
             foreach (Player player in players)
             {

@@ -14,6 +14,8 @@ namespace ClassInventory
     {
         // TODO - create a List to store all inventory objects
         List<Player> players = new List<Player>();
+        int globalID = 0;
+        string wantToDelete = "";
 
         public Form1()
         {
@@ -30,7 +32,8 @@ namespace ClassInventory
             }
             try
             {
-                Player tempPlayer = new Player(nameInput.Text, teamInput.Text, positionInput.Text, Convert.ToInt32(ageInput.Text));
+                Player tempPlayer = new Player(nameInput.Text, teamInput.Text, positionInput.Text, Convert.ToInt32(ageInput.Text), globalID);
+                globalID++;
 
                 // TODO - add object to global list
                 players.Add(tempPlayer);
@@ -53,18 +56,25 @@ namespace ClassInventory
 
             // TODO - if object is in list remove it
             int index = players.FindIndex(a => a.name == removeInput.Text);
-            if (index >= 0)
+            if(index == -1)
             {
-                players.RemoveAt(index);
+                outputLabel.Text = $"Could not remove {removeInput.Text} due to it not existing";
+                return;
+            }
+
+            if (wantToDelete == removeInput.Text)
+            {
+              players.RemoveAt(index);
             }
             else
             {
-                outputLabel.Text = "Could not delete player due to it not existing";
+                outputLabel.Text = $"Click again if you want to remove {removeInput.Text} from the list!";
+                wantToDelete = removeInput.Text;
                 return;
             }
 
             // TODO - display message to indicate deletion made
-            outputLabel.Text = $"Deleted {removeInput.Text} from the list!";
+            outputLabel.Text = $"Removed {removeInput.Text} from the list!";
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -81,7 +91,7 @@ namespace ClassInventory
             }
             else
             {
-                outputLabel.Text = "Player not found!";
+                outputLabel.Text = $"{textBox1.Text} not found!";
             }
             // TODO - else show not found message
         }
@@ -93,7 +103,7 @@ namespace ClassInventory
             outputLabel.Text = "";
             foreach (Player player in players)
             {
-                outputLabel.Text += $"{player.name} - {player.age} - {player.team} - {player.position}\n";
+                outputLabel.Text += $"ID:{player.ID} | {player.name} - {player.age} - {player.team} - {player.position}\n";
             }
         }
     }

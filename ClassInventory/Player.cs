@@ -10,12 +10,14 @@ namespace ClassInventory
     {
         public string name, team, position;
         public int age;
-        public Player(string _name, string _team, string _position, int _age)
+        public int ID;
+        public Player(string _name, string _team, string _position, int _age, int _ID)
         {
             name = _name;
             team = _team;
             position = _position;
             age = _age;
+            ID = _ID;
         }
     }
 }
